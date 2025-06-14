@@ -79,7 +79,3 @@ This project is open-source and available under the MIT License.
 👤 Author
 
 Made with ❤️ by @tomisedunia
-
----
-Let me know if you want it personalized with your GitHub username or team info — I can paste it directly into your repo.
----
