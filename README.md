@@ -35,32 +35,31 @@ FinAI is a modern, full-stack SaaS web application that helps individuals and ho
 
 1. Clone the repo
 
-```bash
+```
 git clone https://github.com/yourusername/finai.git
 cd finai
-Install dependencies
+```
 
-bash
-Copy
-Edit
+2. Install dependencies
+
+```
 npm install
-Set up your environment variables in .env.local
+```
 
-env
-Copy
-Edit
+3. Set up your environment variables in .env.local
+
+```
 NEXT_PUBLIC_SUPABASE_URL=your_supabase_url
 NEXT_PUBLIC_SUPABASE_ANON_KEY=your_supabase_anon_key
-Run locally
+```
 
-bash
-Copy
-Edit
+4. Run locally
+```
 npm run dev
+```
+
 📂 Project Structure
-bash
-Copy
-Edit
+```
 src/
 ├── app/                 # App router pages
 │   ├── layout.tsx       # Root layout
@@ -71,33 +70,16 @@ src/
 ├── lib/                 # Supabase client setup, helpers
 ├── styles/              # Global styles
 └── types/               # Shared types (if needed)
-🧠 Phase 1 Roadmap
- Project scaffolding & styling
-
- Supabase setup & client config
-
- Auth: Email & Password
-
- Session management
-
- Dashboard UI skeleton
-
- Income form submission
-
- Fetch & display income
-
- Dashboard with live totals
+```
 
 🤝 License
+
 This project is open-source and available under the MIT License.
 
 👤 Author
-Made with ❤️ by @yourusername
 
-yaml
-Copy
-Edit
+Made with ❤️ by @tomisedunia
 
 ---
-
 Let me know if you want it personalized with your GitHub username or team info — I can paste it directly into your repo.
+---
