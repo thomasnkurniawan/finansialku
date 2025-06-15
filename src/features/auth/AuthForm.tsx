@@ -1,12 +1,15 @@
 "use client";
 
 import { useState } from "react";
-import { createClientComponentClient } from "@supabase/auth-helpers-nextjs";
+
 import { Input } from "@/components/ui/input";
 import { Button } from "@/components/ui/button";
+import { supabase } from "@/lib/supabase/client";
+import { useRouter } from "next/navigation";
+
 
 export default function AuthForm() {
-  const supabase = createClientComponentClient();
+  const router = useRouter();
 
   const [email, setEmail] = useState("");
   const [password, setPassword] = useState("");
@@ -27,6 +30,10 @@ export default function AuthForm() {
       setMessage(error.message);
     } else {
       setMessage(isLogin ? "Login success" : "Signup success! Check your email.");
+    }
+
+    if (isLogin) {
+      router.push("/dashboard");
     }
 
     setLoading(false);

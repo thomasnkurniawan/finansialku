@@ -1,9 +1,10 @@
 // src/app/page.tsx
-import { createServerSupabaseClient } from "@/lib/supabase-server";
+
+import { createClient } from "@/lib/supabase/server";
 import Link from "next/link";
 
 export default async function HomePage() {
-  const supabase = createServerSupabaseClient();
+  const supabase = await createClient();
   const { data: { session } } = await supabase.auth.getSession();
 
   return (

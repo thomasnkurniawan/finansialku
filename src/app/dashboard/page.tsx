@@ -1,17 +1,28 @@
 "use client";
 
+import { Button } from "@/components/ui/button";
 import { Card, CardContent, CardHeader, CardTitle } from "@/components/ui/card";
 import { Banknote, Calendar, CreditCard, Wallet } from "lucide-react";
+import Link from "next/link";
 
 export default function DashboardPage() {
   return (
     <main className="max-w-5xl mx-auto px-4 py-10 space-y-8">
       <header className="mb-6">
-        <h1 className="text-3xl font-bold flex items-center gap-2">
-          <Wallet className="w-7 h-7 text-primary" />
-          Dashboard
-        </h1>
-        <p className="text-gray-500">Overview of your financial activity.</p>
+        <div className="flex items-center gap-2 justify-between">
+          <div>
+            <h1 className="text-3xl font-bold flex items-center gap-2">
+              <Wallet className="w-7 h-7 text-primary" />
+              Dashboard
+            </h1>
+            <p className="text-gray-500">
+              Overview of your financial activity.
+            </p>
+          </div>
+          <Button variant={"outline"}>
+            <Link href="/income">Income</Link>
+          </Button>
+        </div>
       </header>
 
       <section className="grid grid-cols-1 sm:grid-cols-2 md:grid-cols-3 gap-4">
