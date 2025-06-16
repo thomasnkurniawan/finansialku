@@ -23,7 +23,7 @@ export default async function IncomePage() {
   }
 
   return (
-    <main className="max-w-2xl mx-auto p-4 space-y-6">
+    <main className="p-4 space-y-6">
       <Card>
         <CardHeader>
           <CardTitle>Add New Income</CardTitle>
