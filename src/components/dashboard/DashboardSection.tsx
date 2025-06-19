@@ -5,7 +5,17 @@ import { Wallet, Banknote, CreditCard, Calendar } from "lucide-react";
 import { useEffect, useState } from "react";
 import { Card, CardHeader, CardTitle, CardContent } from "../ui/card";
 import { Badge } from "../ui/badge";
-import { useAuth } from "@/hooks/useAuth";
+import { useAiInsight } from "@/hooks/useAiInsight";
+import AIInsight from "./AIInsight";
+
+export type Transaction = {
+  id: string;
+  user_id: string;
+  amount: number;
+  description: string;
+  created_at: string;
+  type: string;
+};
 
 export type Income = {
   id: string;
@@ -15,29 +25,45 @@ export type Income = {
   created_at: string;
 };
 
-export default function DashboardSection() {
+export default function DashboardSection({ userId }: { userId: string }) {
   const [totalIncome, setTotalIncome] = useState(0);
-  const [recentIncomes, setRecentIncomes] = useState<Income[]>([]);
+  const [totalExpenses, setTotalExpenses] = useState(0);
+  const [recentActivities, setRecentActivities] = useState<Transaction[]>([]);
 
-  const { user } = useAuth();
+  const { insight, loading, generateInsight } = useAiInsight();
 
   useEffect(() => {
-    if (!user) return;
     const fetchData = async () => {
       const { data: incomes } = await supabase
         .from("incomes")
         .select("*")
-        .eq("user_id", user?.id)
-        .order("created_at", { ascending: false });
+        .eq("user_id", userId);
 
-      const total =
+      const { data: expenses } = await supabase
+        .from("expenses")
+        .select("*")
+        .eq("user_id", userId);
+
+      const incomeTotal =
         incomes?.reduce((acc, cur) => acc + Number(cur.amount), 0) || 0;
-      setTotalIncome(total);
-      setRecentIncomes(incomes?.slice(0, 3) || []);
+      const expenseTotal =
+        expenses?.reduce((acc, cur) => acc + Number(cur.amount), 0) || 0;
+
+      const combined: (Transaction & { type: "income" | "expense" })[] = [
+        ...(incomes?.map((d) => ({ ...d, type: "income" })) || []),
+        ...(expenses?.map((d) => ({ ...d, type: "expense" })) || []),
+      ].sort((a, b) => Date.parse(b.created_at) - Date.parse(a.created_at));
+
+      setTotalIncome(incomeTotal);
+      setTotalExpenses(expenseTotal);
+      setRecentActivities(combined.slice(0, 5));
+      generateInsight({ income: incomeTotal, expense: expenseTotal });
     };
 
     fetchData();
-  }, [user]);
+  }, [userId]);
+
+  const balance = totalIncome - totalExpenses;
 
   return (
     <>
@@ -60,7 +86,9 @@ export default function DashboardSection() {
             <CreditCard className="w-6 h-6 text-red-600" />
           </CardHeader>
           <CardContent>
-            <p className="text-2xl font-semibold text-red-600">Rp 0</p>
+            <p className="text-2xl font-semibold text-red-600">
+              Rp {Number(totalExpenses).toLocaleString()}
+            </p>
           </CardContent>
         </Card>
 
@@ -71,7 +99,7 @@ export default function DashboardSection() {
           </CardHeader>
           <CardContent>
             <p className="text-2xl font-semibold text-blue-600">
-              Rp {Number(totalIncome).toLocaleString()}
+              Rp {Number(balance).toLocaleString()}
             </p>
           </CardContent>
         </Card>
@@ -83,13 +111,19 @@ export default function DashboardSection() {
           Recent Activity
         </h2>
         <div className="space-y-3">
-          {recentIncomes.length === 0 ? (
-            <p className="text-muted-foreground">No recent income activity.</p>
+          {recentActivities.length === 0 ? (
+            <p className="text-muted-foreground">
+              No recent income or expense activity.
+            </p>
           ) : (
-            recentIncomes.map((item) => (
+            recentActivities.map((item) => (
               <Card key={item.id}>
                 <CardContent className="py-3 space-y-1">
-                  <div className="font-medium text-primary">
+                  <div
+                    className={`font-medium ${
+                      item.type === "income" ? "text-green-600" : "text-red-600"
+                    }`}
+                  >
                     Rp {Number(item.amount).toLocaleString()}
                   </div>
                   <div className="text-sm text-muted-foreground">
@@ -98,12 +132,20 @@ export default function DashboardSection() {
                   <div className="text-xs text-gray-400">
                     {new Date(item.created_at).toLocaleString()}
                   </div>
-                  <Badge variant={"default"}>Income</Badge>
+                  <Badge
+                    variant={item.type === "income" ? "default" : "destructive"}
+                  >
+                    {item.type}
+                  </Badge>
                 </CardContent>
               </Card>
             ))
           )}
         </div>
+      </section>
+
+      <section className="mt-6">
+        <AIInsight content={insight || ""} loading={loading} />
       </section>
     </>
   );

@@ -1,4 +1,3 @@
-
 import { createClient } from "@/lib/supabase/server";
 import { redirect } from "next/navigation";
 import DashboardSection from "@/components/dashboard/DashboardSection";
@@ -19,7 +18,7 @@ export default async function DashboardPage() {
         </div>
       </header>
 
-      <DashboardSection />
+      <DashboardSection userId={user.id} />
     </div>
   );
 }
