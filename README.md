@@ -1,81 +1,86 @@
-# 💸 FinAI — Smart Finance Tracker for Individuals & Households
+# Finansialku
 
-FinAI is a modern, full-stack SaaS web application that helps individuals and households manage income, expenses, and financial balance — intelligently and effortlessly. Built with Next.js 14, Supabase, and styled using Tailwind CSS + ShadCN UI, it delivers a clean and scalable foundation for personal finance management.
+**Finansialku** is a personal and household financial management web application built with **Next.js 14 (App Router)**, **Supabase**, **Tailwind CSS v4**, and **shadcn/ui**. It helps users track their income and expenses, then receive AI-generated insights to plan better financial goals.
 
----
+## ✨ Features
 
-## 📌 Features (Phase 1 - MVP)
+### ✅ Phase 1 — MVP (Authentication & Income Tracking)
+- [x] Project setup with Next.js 14, Tailwind v4, shadcn/ui, Supabase
+- [x] Custom authentication (email + password)
+- [x] Session handling using Supabase SSR helpers
+- [x] Income tracking (form + list)
+- [x] Dashboard summary UI with total income
 
-- ✅ Email & Password Authentication (via Supabase)
-- ✅ Session Handling with Auto-Redirect
-- ✅ Protected Dashboard for Authenticated Users
-- ✅ Dashboard Skeleton UI with Summary Cards:
-  - Total Income
-  - Total Expense
-  - Balance
-- ✅ Fully responsive UI with ShadCN components & Lucide icons
-- 🔄 Add & track income entries (in progress)
+### 🔄 In Progress — Phase 2 (Expenses & AI Insight)
+- [x] Add expenses form & history
+- [x] Calculate balance (income - expenses)
+- [x] AI insight generation based on financial data using Groq (LLaMA 3)
+- [ ] Financial suggestions for saving/investing goals
+- [ ] Modular AI hook to reuse insight generator
 
----
+### 🔜 Phase 3 — Shared Household Support
+- [ ] Multi-user household feature
+- [ ] Invite family members
+- [ ] Role-based access
 
-## 🧱 Tech Stack
+## 🧠 Tech Stack
 
-| Layer     | Tech                                |
-|-----------|-------------------------------------|
-| Framework | [Next.js 14](https://nextjs.org)    |
-| Auth/DB   | [Supabase](https://supabase.com)    |
-| Styling   | [Tailwind CSS v4](https://tailwindcss.com) |
-| UI Kit    | [ShadCN UI](https://ui.shadcn.com)  |
-| Icons     | [Lucide](https://lucide.dev)        |
-| Font      | [Nunito](https://fonts.google.com/specimen/Nunito) |
+- **Frontend:** Next.js 14 (App Router), React 19
+- **Styling:** Tailwind CSS v4, shadcn/ui
+- **Database & Auth:** Supabase (PostgreSQL)
+- **AI Integration:** Groq (LLaMA 3)
+- **State & Utils:** React hooks, Supabase SSR
+- **Design Pattern:** Scalable modular structure
 
----
+## 🚀 Local Development
 
-## 🚀 Getting Started
-
-1. Clone the repo
-
-```
-git clone https://github.com/yourusername/finai.git
-cd finai
-```
-
-2. Install dependencies
-
-```
+```bash
+git clone https://github.com/yourusername/finansialku.git
+cd finansialku
 npm install
-```
-
-3. Set up your environment variables in .env.local
-
-```
-NEXT_PUBLIC_SUPABASE_URL=your_supabase_url
-NEXT_PUBLIC_SUPABASE_ANON_KEY=your_supabase_anon_key
-```
-
-4. Run locally
-```
 npm run dev
 ```
 
-📂 Project Structure
+> Make sure `.env.local` includes your Supabase credentials.
+
+## 📂 Project Structure
+
 ```
 src/
-├── app/                 # App router pages
-│   ├── layout.tsx       # Root layout
-│   ├── page.tsx         # Landing page
-│   └── dashboard/       # Dashboard route
-├── components/          # Reusable components
-│   └── ui/              # ShadCN components
-├── lib/                 # Supabase client setup, helpers
-├── styles/              # Global styles
-└── types/               # Shared types (if needed)
+├── app/
+│   ├── dashboard/
+│   │   └── layout.tsx
+│   │   └── page.tsx
+│   ├── income/
+│   │   └── page.tsx
+│   └── expenses/
+├── components/
+│   ├── income/
+│   ├── dashboard/
+│   ├── layout/
+│   └── ui/
+├── lib/
+│   ├── supabase/
+│   ├── config/
+│   └── hooks/
 ```
 
-🤝 License
+## 📌 Roadmap Summary
 
-This project is open-source and available under the MIT License.
+### Phase 1 — ✅ Done
+- Authentication
+- Income tracking
+- Dashboard skeleton + summary
 
-👤 Author
+### Phase 2 — 🟡 In Progress
+- Expenses feature
+- AI-powered financial insight (Groq)
+- Modular AI helper hook
 
-Made with ❤️ by @tomisedunia
+### Phase 3 — 🔜 Planned
+- Multi-user household management
+
+---
+
+Made with ☕ by Thomas.  
+Let's help people reach their financial goals with the help of AI 💰🤖
